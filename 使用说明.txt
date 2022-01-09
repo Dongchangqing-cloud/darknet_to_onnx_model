@@ -1,0 +1,20 @@
+1.
+运行脚本是yolov3_to_onnx.py脚本;
+2.
+使用时，检查cfg文件，若存在yolo层后面跟着的route层，若是拼接前面较多层的结构，则需要+3*yolo层个数,例如，第一个yolo层的后面存在这样的拼接：[这是由于该脚本不支持yolo层解码]
+#CONCAT3,concat with CONV6 end
+[route]
+layers = -1,-15
+需要修改为：
+#CONCAT3,concat with CONV6 end
+[route]
+layers = -1,-12
+因此，test.cfg是yolov5-tiny16.cfg修改后的结果，test.weights对应着yolov5-tiny16.cfg的权重文件；
+
+3.
+若提示缺少对应的库，使用pip等命令安装即可；
+4.
+进行模型转换时，把line752,line778的文件路径指定正确，若在同级目录，即只输入正确名称即可，同时，line793指定输出的onnx文件地址；
+5.
+line769-line771需要指定正确的名称，建议先不修改运行一遍，然后根据输出，查对应的yolo层上层名称；
+
